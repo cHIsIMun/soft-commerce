@@ -1,22 +1,14 @@
-import { useState, useEffect } from "react";
-import { signIn } from "next-auth/react"
+import { useState } from "react";
+import { signIn, getSession } from "next-auth/react"
 import { useRouter } from "next/router"
-import { useSession } from "next-auth/react"
+import { GetServerSideProps } from 'next'
 
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const router = useRouter()
-  const { data: session } = useSession()
 
-  useEffect(() => {
-    if (session) {
-      router.push('/')
-    }
-  }, [session])
-  
   const handleSubmit = async e => {
     e.preventDefault();
 
@@ -73,5 +65,21 @@ const SignUp = () => {
     </div>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context)
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
+}
 
 export default SignUp;

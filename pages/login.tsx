@@ -1,26 +1,15 @@
-import { signIn, useSession } from "next-auth/react"
-import { useEffect } from "react"
+import { signIn, getSession } from "next-auth/react"
 import { useRouter } from "next/router"
+import { GetServerSideProps } from 'next'
 
 export default function LoginPage() {
   const router = useRouter()
-  const { data: session } = useSession()
-
-  useEffect(() => {
-    if (session) {
-      router.push('/')
-    }
-  }, [session])
 
   const onSubmit = async e => {
     e.preventDefault()
-    const user = { email: e.target[0].value, password: e.target[1].value }
-    const result = await signIn('credentials', user, { callbackUrl: '/' })
-    if(result){
-        if (result.error) {
-            console.log(result.error)
-        }
-    }
+    await signIn('credentials', { email: e.target[0].value, password: e.target[1].value }).then(() => {
+      router.push('/')
+    })
   }
 
   return (
@@ -32,4 +21,20 @@ export default function LoginPage() {
       </form>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context)
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }

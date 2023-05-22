@@ -27,6 +27,23 @@ model Product {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   orders      OrderItem[]
+  categories  CategoryOnProduct[]
+}
+
+model Category {
+  id          Int         @id @default(autoincrement())
+  name        String
+  products    CategoryOnProduct[]
+}
+
+model CategoryOnProduct {
+  id         Int      @id @default(autoincrement())
+  productId  Int
+  categoryId Int
+  product    Product @relation(fields: [productId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@index([productId, categoryId], name: "product_category_index")
 }
 
 model Order {
