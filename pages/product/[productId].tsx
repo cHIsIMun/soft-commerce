@@ -1,9 +1,10 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // Esta função é executada no momento da construção
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await fetch('http://localhost:3000/api/products', {
+  const response = await fetch(`${API_URL}/api/products`, {
     headers: {
       'x-api-key': process.env.APP_API_KEY,
     },
@@ -24,7 +25,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return { notFound: true };
   }
 
-  const response = await fetch(`http://localhost:3000/api/products/${params.productId}`, {
+  const response = await fetch(`{API_URL}/api/products/${params.productId}`, {
     headers: {
       'x-api-key': process.env.APP_API_KEY,
     },
