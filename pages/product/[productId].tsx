@@ -1,26 +1,14 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
+/**import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-// Função auxiliar para realizar uma requisição com tentativas
-async function fetchRetry(url, options, n) {
-  for (let i = 0; i < n; i++) {
-    try {
-      return await fetch(url, options);
-    } catch (err) {
-      if (i === n - 1) throw err;
-      await new Promise((res) => setTimeout(res, 10000));
-    }
-  }
-}
-
 // Esta função é executada no momento da construção
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await fetchRetry(`${API_URL}/api/products`, {
+  const response = await fetch(`${API_URL}/api/products`, {
     headers: {
       'x-api-key': process.env.APP_API_KEY,
     },
-  }, 5);
+  });
   const products = await response.json();
 
   // Aqui, você pode especificar os produtos que deseja gerar primeiro
@@ -37,12 +25,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return { notFound: true };
   }
 
-  const response = await fetchRetry(`${API_URL}/api/products/${params.productId}`, {
+  const response = await fetch(`${API_URL}/api/products/${params.productId}`, {
     headers: {
       'x-api-key': process.env.APP_API_KEY,
     },
-  }, 5);
+  });
 
+  // Adicione um delay artificial se a rota não foi pré-renderizada
   if (response.status === 404) {
     await new Promise((resolve) => setTimeout(resolve, 5000));
   }
@@ -71,4 +60,12 @@ const ProductPage: React.FC<{ product: any }> = ({ product }) => {
   );
 };
 
+export default ProductPage;**/
+const ProductPage = () => {
+  return (
+    <div>
+      <h1>Product Page</h1>
+    </div>
+  );
+};
 export default ProductPage;
