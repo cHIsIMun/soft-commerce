@@ -1,4 +1,4 @@
-/**import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -60,12 +60,4 @@ const ProductPage: React.FC<{ product: any }> = ({ product }) => {
   );
 };
 
-export default ProductPage;**/
-const ProductPage = () => {
-  return (
-    <div>
-      <h1>Product Page</h1>
-    </div>
-  );
-};
 export default ProductPage;
