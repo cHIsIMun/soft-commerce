@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       data: {
         email,
         name,
-        password: hashedPassword, // Armazenando hashedPassword em vez de plain password
+        password: hashedPassword,
       },
     })
 

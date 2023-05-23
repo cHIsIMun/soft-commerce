@@ -1,10 +1,10 @@
 import NextAuth from "next-auth"
-import Credentials from "next-auth/providers/credentials"
+import CredentialsProvider from "next-auth/providers/credentials"
 import { verifyCredentials } from "../../../lib/userService.js"
 
 export default NextAuth({
   providers: [
-    Credentials({
+    CredentialsProvider({
       name: 'Credentials',
       credentials: {
         email: { label: "Email", type: "text", placeholder: "john.doe@example.com" },
