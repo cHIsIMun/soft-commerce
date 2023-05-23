@@ -1,10 +1,9 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 import { withApiKey } from '../../../utils/withApiKey'
 
 const prisma = new PrismaClient();
 
-async function handle(req: NextApiRequest, res: NextApiResponse) {
+async function handle(req, res) {
   const { id } = req.query;
 
   if (req.method === "GET") {
@@ -23,4 +22,5 @@ async function handle(req: NextApiRequest, res: NextApiResponse) {
   res.setHeader("Allow", ["GET"]);
   res.status(405).end(`Method ${req.method} Not Allowed`);
 }
+
 export default withApiKey(handle)

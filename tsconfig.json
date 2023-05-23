@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "pages/api/products/[id].ts", "seed.js"  ],
+, "pages/api/products/[id].js", "seed.js", "pages/api/categories/[id].js", "pages/api/categories/index.js", "pages/api/products/index.js", "pages/product/category/[categoryId].jsx", "pages/product/[productId].jsx", "pages/_app.jsx", "pages/index.jsx", "pages/login.jsx", "pages/signup.jsx"  ],
   "exclude": [
     "node_modules"
   ]

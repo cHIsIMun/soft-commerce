@@ -1,10 +1,9 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 import { withApiKey } from '../../../utils/withApiKey'
 
 const prisma = new PrismaClient();
 
-async function handle(req: NextApiRequest, res: NextApiResponse) {
+async function handle(req, res) {
   if (req.method === "GET") {
     const products = await prisma.product.findMany({
       include: { categories: true },  // Incluir categorias dos produtos

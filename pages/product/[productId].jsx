@@ -1,9 +1,9 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // Esta função é executada no momento da construção
-export const getStaticPaths: GetStaticPaths = async () => {
+export async function getStaticPaths() {
   const response = await fetch(`${API_URL}/api/products`, {
     headers: {
       'x-api-key': process.env.APP_API_KEY,
@@ -20,7 +20,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 // Esta função é executada no servidor a cada requisição
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export async function getStaticProps(context) {
+  const { params } = context;
+  
   if (!params?.productId) {
     return { notFound: true };
   }
@@ -44,7 +46,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   };
 };
 
-const ProductPage: React.FC<{ product: any }> = ({ product }) => {
+const ProductPage = ({ product }) => {
   if (!product) {
     return <div>Carregando...</div>;
   }

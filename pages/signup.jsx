@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { signIn, getSession } from "next-auth/react"
 import { useRouter } from "next/router"
-import { GetServerSideProps } from 'next'
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const SignUp = () => {
@@ -67,7 +66,7 @@ const SignUp = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export async function getServerSideProps(context) {
   const session = await getSession(context)
   if (session) {
     return {

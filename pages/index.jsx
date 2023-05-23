@@ -1,7 +1,7 @@
 import React from 'react';
 import { signOut } from 'next-auth/react';
 
-const Home: React.FC = () => {
+const Home = () => {
   return (
     <div>
       <h1>Bem-vindo à minha aplicação!</h1>

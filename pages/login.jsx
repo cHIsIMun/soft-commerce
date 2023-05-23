@@ -1,6 +1,5 @@
 import { signIn, getSession } from "next-auth/react"
 import { useRouter } from "next/router"
-import { GetServerSideProps } from 'next'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -23,7 +22,7 @@ export default function LoginPage() {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export async function getServerSideProps(context) {
   const session = await getSession(context)
   if (session) {
     return {

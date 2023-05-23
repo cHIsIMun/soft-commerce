@@ -1,10 +1,9 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 import { withApiKey } from '../../../utils/withApiKey'
 
 const prisma = new PrismaClient();
 
-async function handle(req: NextApiRequest, res: NextApiResponse) {
+async function handle(req, res) {
   const { id } = req.query;
 
   if (req.method === "GET") {

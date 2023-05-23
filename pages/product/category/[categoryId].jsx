@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-const CategoryPage: React.FC = () => {
+const CategoryPage = () => {
   const router = useRouter();
   const { categoryId } = router.query;
 
