@@ -25,7 +25,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return { notFound: true };
   }
 
-  const response = await fetch(`{API_URL}/api/products/${params.productId}`, {
+  const response = await fetch(`${API_URL}/api/products/${params.productId}`, {
     headers: {
       'x-api-key': process.env.APP_API_KEY,
     },
