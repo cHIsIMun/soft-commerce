@@ -2,6 +2,7 @@ import { useState } from "react";
 import { signIn, getSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import { GetServerSideProps } from 'next'
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -13,7 +14,7 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("/api/signup", {
+      const res = await fetch(`${API_URL}/api/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
