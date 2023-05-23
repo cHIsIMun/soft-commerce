@@ -4,7 +4,9 @@
   "description": "Modelo de e-commerce pensado e desenvolvido em next js",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev"
+    "dev": "next dev",
+    "build": "next build",
+    "vercel-build": "next build"
   },
   "keywords": [],
   "author": "",
