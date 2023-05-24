@@ -67,58 +67,56 @@ export async function getStaticProps() {
 
 const Home = ({ categoriesWithProducts }) => {
   return (
-    <div>
-      <Navbar bg="light" variant="light">
-        <Navbar.Brand href="#home">Nome da Aplicação</Navbar.Brand>
-        <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link onClick={() => signOut()}>Sair</Nav.Link>
-        </Nav>
-        <Form inline>
+    <div className="homeContainer">
+      <Navbar bg="light" variant="light" className="navbar">
+        <Navbar.Brand href="#home" className="brand">Soft Commerce</Navbar.Brand>
+        <Form inline className="search-engine">
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-primary">Search</Button>
+          <Button variant="outline-primary" className="searchButton">Search</Button>
         </Form>
+        <Nav.Link onClick={() => signOut()} className="navLink">Sair</Nav.Link>
       </Navbar>
 
-      <Carousel>
+      <Carousel className="carousel">
         <Carousel.Item>
           <img
-            className="d-block w-100"
-            src="https://via.placeholder.com/800x400"
-            alt="First slide"
+            className="d-block w-100 carouselImage"
+            src="https://4.bp.blogspot.com/-FHlfXtScpPk/U12VKaHDJRI/AAAAAAAAZNI/wHnRJTk1_mA/s1600/R.+Groove.jpg"
+            alt="Moda masculina"
           />
-          <Carousel.Caption>
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          <Carousel.Caption className="carouselCaption">
+            <h3></h3>
+            <p></p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
           <img
-            className="d-block w-100"
-            src="https://via.placeholder.com/800x400"
-            alt="Second slide"
+            className="d-block w-100 carouselImage"
+            src="https://cdn.shopify.com/s/files/1/0015/4219/3267/files/Copia_de_BANNER_SITE_CARNAVAL_2507047f-9210-4d83-8892-82e858de032e.png?v=1679321949&width=1600"
+            alt="Moda feminina"
           />
 
-          <Carousel.Caption>
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <Carousel.Caption className="carouselCaption">
+            <h3></h3>
+            <p></p>
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
 
       {categoriesWithProducts.map((category) => (
-        <Container key={category.id}>
-          <h1>{category.name}</h1>
+        <Container key={category.id} className="categoryContainer">
+          <h1 className="categoryTitle">{category.name}</h1>
           <Row>
             {category.products.map((product) => (
-              <Col sm={4} key={product.id}>
-                <Card>
-                  <Card.Img variant="top" src={product.imageUrl} />
+              <Col sm={4} key={product.id} className="productCol">
+                <Card className="productCard">
+                  <Card.Img variant="top" src={product.imageUrl} className="productImage" />
                   <Card.Body>
-                    <Card.Title>{product.title}</Card.Title>
-                    <Card.Text>{product.description}</Card.Text>
-                    <Link href={`/product/${product.id}`} className="btn btn-primary">
+                    <Card.Title className="productTitle">{product.title}</Card.Title>
+                    <Card.Text className="productDescription">{product.description.length > 64
+                                                            ? `${product.description.slice(0, 64)}...`
+                                                            : product.description}</Card.Text>
+                    <Link href={`/product/${product.id}`} className="btn btn-primary productButton">
                       Comprar
                     </Link>
                   </Card.Body>

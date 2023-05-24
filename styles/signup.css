@@ -5,6 +5,8 @@
     border-radius: 15px;
     margin-top: 4vh;
     width: 400px;
+    align-items: center;
+    margin-left: calc(50% - 200px);
 }
 
 .title {

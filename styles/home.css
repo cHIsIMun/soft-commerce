@@ -1,0 +1,59 @@
+.navbar {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .brand {
+    /* Estilos para os links da navbar */
+  }
+  
+  .navLink {
+    /* Estilos para o formulário */
+  }
+  .search-engine{
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+    align-items: center;
+  }
+  .mr-sm-2{
+    height: 38px;
+    width: 220px;
+    margin: 0;
+  }
+  .searchButton{
+    height: 100%;
+  }
+  .categoryContainer {
+    margin-top: 30px;
+  }
+  
+  .productCard {
+    width: 300px;
+    display: grid;
+    padding: 10px;
+    margin-top: 20px;
+  }
+  
+  .productImage {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .Card {
+    /* Estilos para o card */
+  }
+  
+  .Container {
+    /* Estilos para o container */
+  }
+  
+  .Row {
+    /* Estilos para a row */
+  }
+  
+  .Col {
+    /* Estilos para as colunas */
+  }
+  
