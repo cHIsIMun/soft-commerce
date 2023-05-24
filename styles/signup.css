@@ -1,10 +1,10 @@
-.container {
+.float-container {
     padding: 30px;
     background-color: rgb(237, 237, 237);
     align-self: center;
     border-radius: 15px;
-    margin-top: 50px;
-    width: 50%;
+    margin-top: 4vh;
+    width: 400px;
 }
 
 .title {
@@ -30,19 +30,21 @@
 }
 
 .form-control {
-    margin-bottom: 10px
+    margin: 0;
+    margin-bottom: 5px;
+    font-size: 13px;    
 }
 
 .btn-submit {
-    margin-top: 10px
+    margin-top: 10px;
 }
 
 .error-message {
-    /* Estilos para a mensagem de erro */
-    color: red;
+    color: rgb(250, 58, 58);
+    margin-bottom: 10px
 }
 
-.login-link {
+.login-link,.signup-link {
     color: rgb(91, 91, 91);
     text-align: end;
 }
