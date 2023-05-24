@@ -1,7 +1,9 @@
-import React from 'react';
-import { signOut } from 'next-auth/react';
-import { Navbar, Nav, Form, FormControl, Button, Carousel, Card, Container, Row, Col } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { signOut, useSession } from 'next-auth/react';
+import { Navbar, Nav, Form, FormControl, Button, Carousel, Card, Container, Row, Col, Dropdown } from 'react-bootstrap';
+import { BsCartFill, BsPersonFill } from 'react-icons/bs';
 import Link from 'next/link';
+import CartModal from '../components/CartModal';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getStaticProps() {
@@ -66,6 +68,44 @@ export async function getStaticProps() {
 
 
 const Home = ({ categoriesWithProducts }) => {
+  const { data: session } = useSession();
+  const [showCartModal, setShowCartModal] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+
+  const handleShowCartModal = () => {
+    setShowCartModal(true);
+  };
+
+  const handleAddToCart = (product) => {
+    const existingCartItem = cartItems.find((item) => item.id === product.id);
+
+    if (existingCartItem) {
+      // Se o item já existe no carrinho, atualiza a quantidade e o preço
+    const updatedCartItems = cartItems.map((item) => {
+        if (item.id === product.id) {
+          return {
+            ...item,
+            quantity: item.quantity + 1,
+            price: item.price,
+          };
+        }
+        return item;
+      });
+      setCartItems(updatedCartItems);
+      localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    } else {
+      // Se o item não existe no carrinho, adiciona como novo item
+      const newCartItem = {
+        id: product.id,
+        name: product.title,
+        price: product.price,
+        quantity: 1,
+      };
+      setCartItems((prevCartItems) => [...prevCartItems, newCartItem]);
+      localStorage.setItem('cartItems', JSON.stringify([...cartItems, newCartItem]));
+    }
+  };
+
   return (
     <div className="homeContainer">
       <Navbar bg="light" variant="light" className="navbar">
@@ -74,7 +114,29 @@ const Home = ({ categoriesWithProducts }) => {
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />
           <Button variant="outline-primary" className="searchButton">Search</Button>
         </Form>
-        <Nav.Link onClick={() => signOut()} className="navLink">Sair</Nav.Link>
+        
+        <Nav className="ml-auto">
+          <Nav.Link onClick={handleShowCartModal}>
+            <BsCartFill />
+          </Nav.Link>
+
+          {session ? (
+            <Dropdown>
+              <Dropdown.Toggle as={Nav.Link}>
+                <BsPersonFill />
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu align="right">
+                <Dropdown.Item href="/user">Perfil</Dropdown.Item>
+                <Dropdown.Item href="#">Configurações</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item onClick={() => signOut()}>Sair</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          ) : (
+            <Nav.Link href="/login">Login</Nav.Link>
+          )}
+        </Nav>
       </Navbar>
 
       <Carousel className="carousel">
@@ -112,13 +174,20 @@ const Home = ({ categoriesWithProducts }) => {
                 <Card className="productCard">
                   <Card.Img variant="top" src={product.imageUrl} className="productImage" />
                   <Card.Body>
-                    <Card.Title className="productTitle">{product.title}</Card.Title>
-                    <Card.Text className="productDescription">{product.description.length > 64
-                                                            ? `${product.description.slice(0, 64)}...`
-                                                            : product.description}</Card.Text>
-                    <Link href={`/product/${product.id}`} className="btn btn-primary productButton">
-                      Comprar
+                    <Link href={`/product/${product.id}`} className='link-card'>
+                      <Card.Title className="productTitle">{product.title.length > 30
+                                                        ? `${product.title.slice(0, 30)}...`
+                                                        : product.title}</Card.Title>
+                      <Card.Text className="productDescription">{product.description.length > 30
+                                                          ? `${product.description.slice(0, 30)}...`
+                                                          : product.description}</Card.Text>
                     </Link>
+                    <div className='footer-card'>
+                      <Card.Title className="product-price"><b>R${product.price.toFixed(2)}</b></Card.Title>
+                      <Button variant='outline-primary' onClick={() => handleAddToCart(product)}>
+                        Adicionar <BsCartFill style={{ marginRight: '5px' }} />
+                      </Button>
+                    </div>
                   </Card.Body>
                 </Card>
               </Col>
@@ -126,6 +195,15 @@ const Home = ({ categoriesWithProducts }) => {
           </Row>
         </Container>
       ))}
+
+      {showCartModal && (
+        <CartModal
+          show={showCartModal}
+          cartItems={cartItems}
+          totalPrice={0}
+          onHide={() => setShowCartModal(false)}
+        />
+      )}
     </div>
   );
 };
