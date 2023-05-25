@@ -3,6 +3,7 @@ import '../styles/globals.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/signup.css'
 import '../styles/home.css'
+import '../styles/cartModal.css'
 
 
 function MyApp({ Component, pageProps }) {

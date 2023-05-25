@@ -167,19 +167,19 @@ const Home = ({ categoriesWithProducts }) => {
 
       {categoriesWithProducts.map((category) => (
         <Container key={category.id} className="categoryContainer">
-          <h1 className="categoryTitle">{category.name}</h1>
-          <Row>
+        <h1 className="categoryTitle">{category.name}</h1>
+          <Row className='line-card'>
             {category.products.map((product) => (
               <Col sm={4} key={product.id} className="productCol">
                 <Card className="productCard">
                   <Card.Img variant="top" src={product.imageUrl} className="productImage" />
-                  <Card.Body>
+                  <Card.Body className="card-body">
                     <Link href={`/product/${product.id}`} className='link-card'>
                       <Card.Title className="productTitle">{product.title.length > 30
                                                         ? `${product.title.slice(0, 30)}...`
                                                         : product.title}</Card.Title>
-                      <Card.Text className="productDescription">{product.description.length > 30
-                                                          ? `${product.description.slice(0, 30)}...`
+                      <Card.Text className="productDescription">{product.description.length > 25
+                                                          ? `${product.description.slice(0, 25)}...`
                                                           : product.description}</Card.Text>
                     </Link>
                     <div className='footer-card'>
